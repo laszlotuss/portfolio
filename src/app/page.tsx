@@ -5,9 +5,6 @@ import { RoleStamp } from "./RoleStamp";
 export default async function Home() {
   const apps = await getApps();
   const groups = groupByYear(apps);
-  // "Latest" marks the most recent app that's still on the App Store, so a
-  // newer-but-delisted app at the top of the timeline doesn't claim the badge.
-  const latestId = apps.find((app) => app.storeUrl)?.id;
 
   return (
     <>
@@ -52,7 +49,7 @@ export default async function Home() {
                   <Link
                     key={app.id}
                     href={`/${app.id}`}
-                    className="group flex items-center gap-4 rounded-3xl p-3 -ml-3 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
+                    className="group flex items-start gap-4 rounded-3xl p-3 -ml-3 hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors"
                   >
                     <img
                       src={app.icon}
@@ -64,11 +61,7 @@ export default async function Home() {
                         <h3 className="font-bold text-gray-800 dark:text-gray-200 truncate">
                           {app.name}
                         </h3>
-                        {app.id === latestId && (
-                          <span className="shrink-0 bg-indigo-500 text-white text-xs font-semibold rounded-full px-2 py-0.5">
-                            Latest
-                          </span>
-                        )}
+                        <RoleStamp role={app.role} />
                       </div>
                       {(app.genre || app.description) && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
@@ -78,9 +71,8 @@ export default async function Home() {
                         </p>
                       )}
                     </div>
-                    <RoleStamp role={app.role} />
                     <svg
-                      className="shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-indigo-500 transition-colors"
+                      className="shrink-0 self-center text-gray-300 dark:text-gray-600 group-hover:text-indigo-500 transition-colors"
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
                       height="20"
