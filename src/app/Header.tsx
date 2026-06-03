@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import { socials } from "./socials";
+import { socials, appStore } from "./socials";
 
 interface iHeaderProps {}
 
@@ -19,12 +19,12 @@ const Header: FunctionComponent<iHeaderProps> = () => {
           </Link>
         </div>
         <Link href="/">
-          <h1 className="text-indigo-600 dark:text-indigo-400 font-black text-xl">
+          <h1 className="text-indigo-600 dark:text-indigo-400 font-black text-xl whitespace-nowrap">
             Tuss Co.
           </h1>
         </Link>
-        <div className="flex-1 flex gap-3 justify-end">
-          {socials.map((social) => (
+        <div className="flex-1 flex gap-2 justify-end">
+          {[...socials, appStore].map((social) => (
             <a
               key={social.name}
               href={social.href}
