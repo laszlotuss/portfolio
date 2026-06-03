@@ -22,19 +22,16 @@ body {
     rgb(var(--background-start-rgb)); */
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  // Full-height column so the footer sits at the bottom, but the document
+  // (window) scrolls — not the body — so route changes scroll to the top.
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 html,
 body {
-  height: 100%;
-  height: -webkit-fill-available;
   // background: #f2eecb11;
   overflow-x: hidden;
-}
-
-html {
-  overflow-y: hidden;
 }
 
 div.image-container {
