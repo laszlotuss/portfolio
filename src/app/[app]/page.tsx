@@ -148,18 +148,23 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
         </div>
       </div>
 
-      {/* Screenshots */}
+      {/* Screenshots — full-bleed, centered until they overflow */}
       {app.screenshots.length > 0 && (
-        <div className="mt-10 -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-none">
-          {app.screenshots.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt={`${app.name} screenshot ${i + 1}`}
-              loading="lazy"
-              className="h-[440px] w-auto rounded-2xl shadow-md shrink-0 snap-start"
-            />
-          ))}
+        <div className="mt-10 relative left-[calc(50%-50vw)] w-screen">
+          <div
+            className="flex gap-4 overflow-x-auto px-5 snap-x snap-mandatory scrollbar-none"
+            style={{ justifyContent: "safe center" }}
+          >
+            {app.screenshots.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`${app.name} screenshot ${i + 1}`}
+                loading="lazy"
+                className="h-[440px] w-auto rounded-2xl shadow-md shrink-0 snap-start"
+              />
+            ))}
+          </div>
         </div>
       )}
 
