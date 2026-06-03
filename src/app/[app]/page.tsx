@@ -101,9 +101,9 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
             </h1>
             <RoleStamp role={app.role} />
           </div>
-          {(app.genre || app.developer) && (
+          {(app.genre || app.company) && (
             <p className="mt-1 text-gray-500 dark:text-gray-400 font-medium">
-              {[app.genre, app.developer].filter(Boolean).join(" · ")}
+              {[app.genre, app.company].filter(Boolean).join(" · ")}
             </p>
           )}
           {typeof app.rating === "number" && app.rating > 0 && (

@@ -33,6 +33,9 @@ export interface iRawApp {
    *  year I actually shipped my version, not the listing's original date. */
   releaseDate?: string;
   genre?: string;
+  /** Company/developer shown after the name. Defaults to the App Store
+   *  developer when fetched. */
+  company?: string;
   role?: iAppRole;
   rating?: number;
   ratingCount?: number;
@@ -57,6 +60,7 @@ export interface iApp {
   role: iAppRole;
   genre?: string;
   developer?: string;
+  company?: string;
   rating?: number;
   ratingCount?: number;
   version?: string;
@@ -127,6 +131,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       role: raw.role ?? "indie",
       genre: raw.genre || itunes.primaryGenreName,
       developer: itunes.artistName,
+      company: raw.company ?? itunes.artistName,
       rating: itunes.averageUserRating,
       ratingCount: itunes.userRatingCount,
       version: itunes.version,
@@ -156,6 +161,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     year: yearOf(raw.releaseDate),
     role: raw.role ?? "indie",
     genre: raw.genre,
+    company: raw.company,
     rating: raw.rating,
     ratingCount: raw.ratingCount,
     minimumOsVersion: raw.minimumOsVersion,

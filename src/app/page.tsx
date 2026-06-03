@@ -63,6 +63,11 @@ export default async function Home() {
                         </h3>
                         <RoleStamp role={app.role} />
                       </div>
+                      {app.company && (
+                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                          {app.company}
+                        </p>
+                      )}
                       {(app.genre || app.description) && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                           {[app.genre, app.description]
