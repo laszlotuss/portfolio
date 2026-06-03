@@ -75,6 +75,24 @@ export default async function Home() {
                             .join(" · ")}
                         </p>
                       )}
+                      {typeof app.rating === "number" && app.rating > 0 && (
+                        <div className="mt-1 flex items-center gap-1 text-xs font-medium text-gray-500 dark:text-gray-400">
+                          <svg
+                            className="w-3.5 h-3.5 text-amber-400"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden
+                          >
+                            <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.401 8.168L12 18.896l-7.335 3.863 1.401-8.168L.132 9.211l8.2-1.193z" />
+                          </svg>
+                          <span>{app.rating.toFixed(1)}</span>
+                          {app.ratingCount ? (
+                            <span className="text-gray-400 dark:text-gray-500">
+                              ({app.ratingCount.toLocaleString()})
+                            </span>
+                          ) : null}
+                        </div>
+                      )}
                     </div>
                     <svg
                       className="shrink-0 self-center text-gray-300 dark:text-gray-600 group-hover:text-indigo-500 transition-colors"
