@@ -155,15 +155,22 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
             className="flex gap-4 overflow-x-auto px-5 snap-x snap-mandatory scrollbar-none"
             style={{ justifyContent: "safe center" }}
           >
-            {app.screenshots.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`${app.name} screenshot ${i + 1}`}
-                loading="lazy"
-                className="h-[440px] w-auto rounded-2xl shadow-md shrink-0 snap-start"
-              />
-            ))}
+            {app.screenshots.map((src, i) => {
+              // The local fallback banner (image.*) isn't a device shot — no
+              // rounded corners for it.
+              const isBanner = /\/image\.[a-z0-9]+$/i.test(src);
+              return (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`${app.name} screenshot ${i + 1}`}
+                  loading="lazy"
+                  className={`h-[440px] w-auto shadow-md shrink-0 snap-start ${
+                    isBanner ? "" : "rounded-2xl"
+                  }`}
+                />
+              );
+            })}
           </div>
         </div>
       )}
