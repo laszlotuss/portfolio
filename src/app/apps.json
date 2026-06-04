@@ -46,6 +46,17 @@
     "ratingCount": 14,
     "description": "Put big emojis in your iMessage chats. Emoji Stickers turns any emoji into an oversized sticker you can drop straight into a conversation."
   },
+    {
+    "id": "beam-catalogue",
+    "company": "beam.space",
+    "name": "Beam Catalogue",
+    "icon": "/icons/beam-catalogue.png",
+    "releaseDate": "2019-11-17",
+    "role": "contract",
+    "genre": "Business",
+    "minimumOsVersion": "iPadOS 13.0",
+    "description": "Buying furniture, choosing sizes, materials, colors, and making choices such as flooring and paint is terribly difficult. Unless you have your own interior designer or you’re willing to bring a piece of furniture home or paint your walls as a test, you’re never really sure if your design choice will work in your home. Even the best photos, specifications, and catalogs aren’t much use in helping decide for sure if a selection will work in your space.\n\nThis problem is frustrating for both buyers and sellers of home furnishings and supplies and it must change. That’s where we come in."
+    },
   {
     "id": "beam-furniture-configurator",
     "appid": "1297296582",
@@ -55,6 +66,8 @@
     "releaseDate": "2020-05-26",
     "role": "contract",
     "genre": "Business",
+    "rating": 5.0,
+    "ratingCount": 12,
     "minimumOsVersion": "iPadOS 13.0",
     "description": "In high-end furniture, customization is essential to getting the result right. beam is a product configurator built for luxury furnishings — instantly visualize any product and material combination, from individual pieces to full compositions, for rapid iteration and informed decisions.\n\nExplore current design directions with filters by brand or product type, and save favorite configurations to a collection for later reference."
   },
