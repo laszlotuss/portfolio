@@ -4,6 +4,23 @@ import { socials, appStore } from "./socials";
 const iconClasses =
   "w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center hover:scale-105 active:scale-95 transition-all text-gray-600 hover:text-indigo-500 dark:bg-gray-700 dark:text-indigo-300";
 
+const CreditLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-indigo-500 hover:underline underline-offset-2"
+  >
+    {children}
+  </a>
+);
+
 const Footer = () => {
   return (
     <footer className="max-w-4xl mx-auto w-full px-4 mb-12 pt-8 border-t border-gray-300 dark:border-gray-600">
@@ -44,15 +61,10 @@ const Footer = () => {
       </div>
       <p className="mt-8 text-sm font-medium text-gray-400 dark:text-gray-500">
         Made by{" "}
-        <a
-          href="https://catnip.media"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-indigo-500 hover:underline underline-offset-2"
-        >
-          Catnip Media
-        </a>{" "}
-        · 2026
+        <CreditLink href="https://laszlotuss.com">László Tuss</CreditLink> @{" "}
+        <CreditLink href="https://catnip.media">Catnip Media</CreditLink> and{" "}
+        <CreditLink href="https://szalay.me">Balázs Szalay</CreditLink> @{" "}
+        <CreditLink href="https://actegon.com">Actegon</CreditLink> · 2026
       </p>
     </footer>
   );
