@@ -36,6 +36,7 @@
   {
     "id": "emoji-stickers",
     "appid": "1599885255",
+    "company": "Laszlo Tuss",
     "name": "Emoji Stickers for iMessage ㋡",
     "icon": "/icons/1599885255.png",
     "releaseDate": "2021-12-21",
@@ -48,6 +49,7 @@
   {
     "id": "beam-furniture-configurator",
     "appid": "1297296582",
+    "company": "beam.space",
     "name": "beam — furniture configurator",
     "icon": "/icons/beam.png",
     "releaseDate": "2020-05-26",
@@ -59,6 +61,7 @@
   {
     "id": "beam-wittmann-special",
     "appid": "1534169489",
+    "company": "beam.space",
     "name": "beam — Wittmann special",
     "icon": "/icons/1534169489.png",
     "releaseDate": "2020-10-24",
@@ -70,6 +73,7 @@
   {
     "id": "launch-real-estate",
     "name": "Launch Real Estate",
+    "company": "LAUNCH",
     "icon": "/icons/launch.png",
     "releaseDate": "2017-03-01",
     "role": "contract",
@@ -79,17 +83,20 @@
   {
     "id": "hue-power",
     "name": "Hue Power",
+    "company": "Tappointment",
     "icon": "/icons/hue.png",
     "releaseDate": "2016-09-01",
     "role": "co-owner",
     "genre": "Lifestyle",
     "rating": 3.53,
     "ratingCount": 86,
+    "minimumOsVersion": "iOS 5.0",
     "description": "Use your phone as a remote for your Philips Hue lights — toggle them on and off, fine-tune brightness, switch colors and save your favorites. Built on a custom SDK for communicating with the Hue bridge.\n\nGreat lights control\n- Control Hue lights individually\n- Turn lights on/off and set brightness from the main screen\n- Use a master fader to fine-tune your active lights\n- Power-on Behavior: decide how your lights come back on\n\nManage your lights as groups\n- Group lights and control them with a single touch\n- Set a whole group to the same color and brightness\n\nSnapshots — capture a moment\n- Save the state of all active lights into a snapshot and recall it later\n- Use snapshots as scenes and share them via your Hue bridge\n\nMulti-bridge support\n- Use more than one Philips Hue bridge at the same time"
   },
   {
     "id": "pogochat",
     "name": "PoGoChat",
+    "company": "Laszlo Tuss",
     "icon": "/icons/pogo.png",
     "releaseDate": "2016-07-01",
     "role": "indie",
@@ -103,11 +110,13 @@
     "releaseDate": "2016-05-01",
     "role": "contract",
     "genre": "Business",
+    "minimumOsVersion": "iOS 5.0",
     "description": "A B2C marketplace connecting advertisers with specially talented providers. I built the iOS app — prepay system, phone validation and real-time chat."
   },
   {
     "id": "project-hero",
     "name": "Project Hero",
+    "company": "McKinsey & Company",
     "icon": "/icons/hero.png",
     "releaseDate": "2015-10-01",
     "role": "contract",
@@ -117,26 +126,31 @@
   {
     "id": "body-spa-salons",
     "name": "Body Spa Salons & Wellness",
+    "company": "Tappointment",
     "icon": "/icons/bodyspa.png",
     "releaseDate": "2015-06-01",
     "role": "contract",
     "genre": "Lifestyle",
+    "minimumOsVersion": "iOS 5.0",
     "description": "A whitelabel booking app powered by our Tappointment platform."
   },
   {
     "id": "tappointment",
     "name": "Tappointment",
+    "company": "Tappointment",
     "icon": "/icons/tappointment.png",
     "releaseDate": "2015-03-01",
     "role": "co-owner",
     "genre": "Productivity",
     "rating": 5.0,
     "ratingCount": 25,
+    "minimumOsVersion": "iOS 5.0",
     "description": "Your 24/7 receptionist. Couldn't reach your hairdresser, cosmetician or trainer over the phone because they were busy or on holiday? Instead of calling, use Tappointment to book an appointment anytime, anywhere — modifying or cancelling takes just a few taps.\n\nSync Tappointment with your other calendars and see all your appointments alongside your provider's free slots on one page. Browse providers and services to find the one that suits you best.\n\nFor providers: manage your business inside the app — publish your schedule, stay bookable 24/7, invite your customers, and let your calendar fill up automatically without making or taking phone calls."
   },
   {
     "id": "e-naplo",
     "name": "e-Napló",
+    "company": "Twinnet Kft.",
     "icon": "/icons/ellenorzo.png",
     "releaseDate": "2014-08-01",
     "role": "contract",
@@ -146,10 +160,12 @@
   {
     "id": "calmarkr",
     "name": "Calmarkr",
+    "company": "Tappointment",
     "icon": "/icons/calmarkr.png",
     "releaseDate": "2014-03-01",
     "role": "co-owner",
     "genre": "Business",
+    "minimumOsVersion": "iOS 4.0",
     "description": "The predecessor to Tappointment — basic appointment booking for users and simple calendar management for providers."
   }
 ]
