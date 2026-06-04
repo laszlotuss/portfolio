@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import "./globals.scss";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,14 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Script
+          src="https://cdn.undicat.com/analytics.js"
+          strategy="afterInteractive"
+          {...({
+            apikey: "ud_live_OPzWKqcF43pmhLMZkul-gysOiWWC9-pd",
+            spa: "auto",
+          } as any)}
+        />
       </body>
     </html>
   );
