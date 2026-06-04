@@ -1,5 +1,5 @@
 [
-  { "appid": "6470717066" },
+  { "appid": "6470717066", "pip": true, "watch": true },
   { "appid": "6745643890", "id": "mixoji", "sticker": true, "subscription": true },
   { "appid": "6451499657" },
   { "appid": "6471989101", "sticker": true, "subscription": true, "id": "DreamDiary" },
@@ -31,7 +31,7 @@
   },
 
   { "appid": "1462627233", "releaseDate": "2023-05-17", "role": "contract" },
-  { "appid": "1420515755", "releaseDate": "2023-10-15", "role": "contract", "website": "teleprompter.com" },
+  { "appid": "1420515755", "releaseDate": "2023-10-15", "role": "contract", "website": "teleprompter.com", "watch": true },
   { "appid": "1580440106", "role": "co-owner" },
 
   {
@@ -172,6 +172,7 @@
     "releaseDate": "2014-08-01",
     "role": "contract",
     "genre": "Education",
+    "minimumOsVersion": "iOS 4.3",
     "description": "An app for Hungarian parents to follow their children's schoolwork, ported from the existing Android version in my free time."
   },
   {
