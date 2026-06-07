@@ -14,6 +14,13 @@ const nextConfig = {
     "/icon": ["./public/profile.jpg"],
     "/apple-icon": ["./public/profile.jpg"],
   },
+  // Temporary enabled for debugging
+  productionBrowserSourceMaps: true,
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 };
 
 module.exports = nextConfig;
