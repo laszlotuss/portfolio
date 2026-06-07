@@ -31,8 +31,10 @@ export const generateMetadata = async ({
   if (!app) return { title: "Not found | László Tuss" };
 
   return {
-    // The per-app browser-tab favicon comes from the icon.tsx route.
     title: `${app.name} | László Tuss`,
+    icons: {
+      icon: [{ url: `/${app.id}/icon`, type: "image/png", sizes: "64x64" }],
+    },
     openGraph: {
       images: app.icon,
     },

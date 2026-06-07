@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { Metadata } from "next";
 import Footer from "./Footer";
 import Header from "./Header";
 import { FaviconRefresh } from "./FaviconRefresh";
@@ -8,9 +9,12 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "László Tuss",
   description: "Indie iOS developer",
+  icons: {
+    icon: [{ url: "/profile.jpg", type: "image/jpeg" }],
+  },
 };
 
 export default function RootLayout({

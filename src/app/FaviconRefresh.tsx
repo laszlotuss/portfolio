@@ -20,71 +20,41 @@ const appSegment = (pathname: string): string | undefined => {
   return segment;
 };
 
-const iconPathname = (pathname: string) => {
+const faviconFor = (pathname: string) => {
   const app = appSegment(pathname);
-  return app ? `/${app}/icon` : "/icon";
-};
-
-const linkPathname = (href: string) => {
-  try {
-    return new URL(href, window.location.origin).pathname;
-  } catch {
-    return undefined;
-  }
-};
-
-const pickIconHref = (pathname: string, links: HTMLLinkElement[]) => {
-  const wanted = iconPathname(pathname);
-  return (
-    links.find((l) => linkPathname(l.href) === wanted)?.href ??
-    links.find((l) => linkPathname(l.href) === "/icon")?.href
-  );
+  if (app) return { href: `/${app}/icon`, type: "image/png" };
+  return { href: "/profile.jpg", type: "image/jpeg" };
 };
 
 /**
- * Browsers (Safari especially) often don't repaint the tab favicon when only
- * the <link rel="icon"> href changes during client-side navigation — so going
- * back from an app page can leave the app's icon stuck in the tab. Pick the
- * icon for the current route (profile on home/about, per-app on /:id) and
- * mirror it into our own <link> to force a repaint.
+ * Safari often won't repaint the tab favicon on client-side navigation. Mirror
+ * the route-appropriate icon into our own <link> (profile.jpg on home/about,
+ * /:id/icon on app pages) without touching Next's metadata links.
  */
 export const FaviconRefresh = () => {
   const pathname = usePathname();
 
   useEffect(() => {
     const apply = () => {
-      const managed = Array.from(
-        document.querySelectorAll<HTMLLinkElement>(
-          'link[rel="icon"]:not(#dynamic-favicon)'
-        )
-      );
-
-      const fromNext = pickIconHref(pathname, managed);
-      const target =
-        fromNext ??
-        new URL(iconPathname(pathname), window.location.origin).href;
-
-      // Prune accumulated duplicates, keeping the one that matches this route.
-      managed.forEach((l) => {
-        if (linkPathname(l.href) !== iconPathname(pathname)) l.remove();
-      });
+      const { href, type } = faviconFor(pathname);
+      const target = new URL(href, window.location.origin).href;
 
       const existing = document.getElementById(
         "dynamic-favicon"
       ) as HTMLLinkElement | null;
-      if (existing?.href === target) return;
+      if (existing?.href === target && existing.type === type) return;
 
       const link = document.createElement("link");
+      link.id = "dynamic-favicon";
       link.rel = "icon";
+      link.type = type;
       link.href = target;
       document.head.appendChild(link);
       existing?.remove();
-      link.id = "dynamic-favicon";
     };
 
-    // Metadata <link> tags can land slightly after paint — retry once.
     const t1 = setTimeout(apply, 0);
-    const t2 = setTimeout(apply, 200);
+    const t2 = setTimeout(apply, 300);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
