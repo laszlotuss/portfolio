@@ -6,11 +6,12 @@ const nextConfig = {
   // local screenshots. Trace those files into the server functions so the
   // reads work on Vercel, not just at build.
   outputFileTracingIncludes: {
-    "/": ["./public/screens/**/*"],
-    "/[app]": ["./public/screens/**/*"],
-    "/[app]/privacy-policy": ["./public/screens/**/*"],
-    "/privacy-policy/[app]": ["./public/screens/**/*"],
-    // The icon/apple-icon routes read public/profile.jpg at runtime.
+    "/": ["./public/screens/**/*", "./public/profile.jpg"],
+    // Dynamic app routes resolve metadata (incl. apple-touch-icon) at request
+    // time — icon.tsx / apple-icon.tsx read profile.jpg from disk.
+    "/[app]": ["./public/screens/**/*", "./public/profile.jpg"],
+    "/[app]/privacy-policy": ["./public/screens/**/*", "./public/profile.jpg"],
+    "/privacy-policy/[app]": ["./public/screens/**/*", "./public/profile.jpg"],
     "/icon": ["./public/profile.jpg"],
     "/apple-icon": ["./public/profile.jpg"],
   },
