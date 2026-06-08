@@ -1,6 +1,6 @@
 import { getApp } from "@/app/app";
 import { Metadata } from "next";
-import PrivacyPolicy from "@/app/privacy-policy/PrivacyPolicy";
+import PrivacyPolicy from "@/privacy-policy/PrivacyPolicy";
 
 export const generateMetadata = async ({
   params,
