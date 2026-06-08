@@ -18,8 +18,8 @@ const PIP_SUPPORT_URL =
   "https://support.apple.com/guide/iphone/multitask-with-picture-in-picture-iphcc3587b5d/ios";
 const PIP_SUPPORT_TITLE = "Use Picture in Picture on iPhone";
 const PURCHASE_SUPPORT_URLS = [
-  "https://support.apple.com/en-us/118223",
   "https://support.apple.com/en-us/118212",
+  "https://support.apple.com/en-us/118223",
 ];
 const PURCHASE_SUPPORT_TITLE = "Check your purchase history in the App Store";
 
@@ -36,16 +36,16 @@ function getSupportLinks(raw: iRawApp): SupportLink[] {
 
   if (raw.sticker)
     links.push({ url: STICKER_SUPPORT_URL, fallbackTitle: STICKER_SUPPORT_TITLE });
-  if (raw.subscription)
-    links.push({ url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE });
-  if (raw.watch)
-    links.push({ url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE });
   if (raw.pip)
     links.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
+  if (raw.watch)
+    links.push({ url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE });
   if (raw.purchase)
     PURCHASE_SUPPORT_URLS.forEach((url: string) =>
       links.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
     );
+  if (raw.subscription)
+    links.push({ url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE });
 
   return links;
 }
