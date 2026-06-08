@@ -17,6 +17,11 @@ const WATCH_SUPPORT_TITLE = "Set up and use Apple Watch";
 const PIP_SUPPORT_URL =
   "https://support.apple.com/guide/iphone/multitask-with-picture-in-picture-iphcc3587b5d/ios";
 const PIP_SUPPORT_TITLE = "Use Picture in Picture on iPhone";
+const PURCHASE_SUPPORT_URLS = [
+  "https://support.apple.com/en-us/118223",
+  "https://support.apple.com/en-us/118212",
+];
+const PURCHASE_SUPPORT_TITLE = "Check your purchase history in the App Store";
 
 interface SupportLink {
   url: string;
@@ -37,6 +42,10 @@ function getSupportLinks(raw: iRawApp): SupportLink[] {
     links.push({ url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE });
   if (raw.pip)
     links.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
+  if (raw.purchase)
+    PURCHASE_SUPPORT_URLS.forEach((url: string) =>
+      links.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
+    );
 
   return links;
 }
@@ -49,6 +58,10 @@ const ALL_SUPPORT_LINKS: SupportLink[] = [
   { url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE },
   { url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE },
   { url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE },
+  ...PURCHASE_SUPPORT_URLS.map((url) => ({
+    url,
+    fallbackTitle: PURCHASE_SUPPORT_TITLE,
+  })),
 ];
 
 export const metadata: Metadata = {

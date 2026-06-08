@@ -20,6 +20,11 @@ const WATCH_SUPPORT_TITLE = "Set up and use Apple Watch";
 const PIP_SUPPORT_URL =
   "https://support.apple.com/guide/iphone/multitask-with-picture-in-picture-iphcc3587b5d/ios";
 const PIP_SUPPORT_TITLE = "Use Picture in Picture on iPhone";
+const PURCHASE_SUPPORT_URLS = [
+  "https://support.apple.com/en-us/118223",
+  "https://support.apple.com/en-us/118212",
+];
+const PURCHASE_SUPPORT_TITLE = "Check your purchase history in the App Store";
 
 export const generateMetadata = async ({
   params,
@@ -137,6 +142,10 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
     });
   if (app.pip)
     supportLinks.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
+  if (app.purchase)
+    PURCHASE_SUPPORT_URLS.forEach((url) =>
+      supportLinks.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
+    );
   if (descSupportUrl)
     supportLinks.push({ url: descSupportUrl, fallbackTitle: "Support" });
 

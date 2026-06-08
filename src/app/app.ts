@@ -60,6 +60,8 @@ export interface iRawApp {
   watch?: boolean;
   /** Show a Picture in Picture support card. */
   pip?: boolean;
+  /** Purchase help — Apple Support articles about App Store purchases. */
+  purchase?: boolean;
 }
 
 /** A fully-resolved app used everywhere in the UI. */
@@ -90,6 +92,7 @@ export interface iApp {
   subscription?: boolean;
   watch?: boolean;
   pip?: boolean;
+  purchase?: boolean;
   price?: string;
   background?: string;
   color?: string;
@@ -192,6 +195,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
       subscription: raw.subscription,
       watch: raw.watch,
       pip: raw.pip,
+      purchase: raw.purchase,
       price: itunes.formattedPrice,
       background: raw.background,
       color: raw.color,
@@ -225,6 +229,7 @@ const normalize = (raw: iRawApp, itunes: iTunesApp | null): iApp | null => {
     subscription: raw.subscription,
     watch: raw.watch,
     pip: raw.pip,
+    purchase: raw.purchase,
     background: raw.background,
     color: raw.color,
   };
