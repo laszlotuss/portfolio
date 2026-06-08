@@ -1,5 +1,32 @@
+const path = require("path");
+
+// Use real Vercel packages if installed locally, otherwise dev stubs.
+const resolveAlias = {};
+try {
+  require.resolve("@vercel/analytics/next", { paths: [__dirname] });
+} catch {
+  resolveAlias["@vercel/analytics/next"] = path.join(
+    __dirname,
+    "src/vercel-stubs/analytics.tsx"
+  );
+}
+try {
+  require.resolve("@vercel/speed-insights/next", { paths: [__dirname] });
+} catch {
+  resolveAlias["@vercel/speed-insights/next"] = path.join(
+    __dirname,
+    "src/vercel-stubs/speed-insights.tsx"
+  );
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack(config) {
+    if (Object.keys(resolveAlias).length > 0) {
+      config.resolve.alias = { ...config.resolve.alias, ...resolveAlias };
+    }
+    return config;
+  },
   // Browsers request /favicon.ico by default — without this, the [app] catch-all
   // treats "favicon.ico" as an app id and returns HTML instead of an image.
   async rewrites() {
