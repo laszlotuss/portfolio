@@ -71,29 +71,34 @@ const SupportCard = ({
 interface iAppPillProps {
   app: iSupportApp;
   isSelected: boolean;
+  isFilterActive: boolean;
   onSelect: () => void;
 }
 
-const AppPill = ({ app, isSelected, onSelect }: iAppPillProps) => (
-  <button
-    type="button"
-    onClick={onSelect}
-    className={`flex flex-col items-center gap-1.5 shrink-0 w-20 transition-all duration-300 ${
-      isSelected ? "scale-110" : "opacity-60 hover:opacity-90"
-    }`}
-  >
-    <img
-      src={app.icon}
-      alt={app.name}
-      className={`w-14 h-14 rounded-2xl shadow-sm transition-all duration-300 ${
-        isSelected ? "ring-3 ring-indigo-500" : ""
+const AppPill = ({ app, isSelected, isFilterActive, onSelect }: iAppPillProps) => {
+  const dimmed = isFilterActive && !isSelected;
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex flex-col items-center gap-1.5 shrink-0 w-20 transition-all duration-300 ${
+        isSelected ? "scale-110" : dimmed ? "opacity-40" : "opacity-70 hover:opacity-100"
       }`}
-    />
-    <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight line-clamp-2">
-      {app.name}
-    </span>
-  </button>
-);
+    >
+      <img
+        src={app.icon}
+        alt={app.name}
+        className={`w-14 h-14 rounded-2xl shadow-sm transition-all duration-300 ${
+          isSelected ? "ring-3 ring-indigo-500" : ""
+        }`}
+      />
+      <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight line-clamp-2 max-w-full">
+        {app.name}
+      </span>
+    </button>
+  );
+};
 
 export const SupportBrowser = ({
   supportApps,
@@ -112,23 +117,26 @@ export const SupportBrowser = ({
     ? new Set(selectedApp.supportCards.map((c) => c.key))
     : null;
 
+  const isFilterActive = selectedApp !== null;
+
   const handleClear = () => setSelectedAppId(null);
   const handleSelect = (id: string) =>
     setSelectedAppId((prev) => (prev === id ? null : id));
 
   return (
     <>
-      {/* Horizontal scroll of apps */}
-      <div className="mb-6">
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+      {/* Horizontal scroll of apps — full bleed on mobile, centered on desktop */}
+      <div className="mb-6 -mx-4 sm:mx-0">
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 px-4 sm:px-0">
           Select an app to see its support articles:
         </p>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+        <div className="flex gap-4 overflow-x-auto pb-4 px-4 sm:px-0 scrollbar-none">
           {supportApps.map((app) => (
             <AppPill
               key={app.id}
               app={app}
               isSelected={selectedAppId === app.id}
+              isFilterActive={isFilterActive}
               onSelect={() => handleSelect(app.id)}
             />
           ))}
@@ -143,7 +151,7 @@ export const SupportBrowser = ({
       </p>
 
       {/* Support cards — with transition on filter */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col">
         {allCards.map((card, i) => {
           const preview = previews[i];
           const isVisible = !visibleKeys || visibleKeys.has(card.key);
@@ -151,10 +159,10 @@ export const SupportBrowser = ({
           return (
             <div
               key={card.url}
-              className={`transition-all duration-500 ease-in-out ${
+              className={`transition-all duration-500 ease-in-out overflow-hidden ${
                 isVisible
-                  ? "opacity-100 max-h-40 scale-100 mb-0"
-                  : "opacity-0 max-h-0 scale-95 mb-0 pointer-events-none overflow-hidden"
+                  ? "opacity-100 max-h-40 scale-100 mb-3"
+                  : "opacity-0 max-h-0 scale-95 mb-0 pointer-events-none"
               }`}
             >
               {isVisible && (
