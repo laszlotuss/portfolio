@@ -44,11 +44,13 @@ const Header = () => {
               <Link href="/about" className={pillClasses}>
                 About
               </Link>
-              <Link href="/support" className={pillClasses}>
+              <Link
+                href="/support"
+                aria-label="Support"
+                className={iconClasses}
+              >
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  className="w-4 h-4"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -61,7 +63,6 @@ const Header = () => {
                   <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                   <line x1="12" y1="17" x2="12.01" y2="17" />
                 </svg>
-                <span>Support</span>
               </Link>
             </>
           ) : canGoBack ? (
