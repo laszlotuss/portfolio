@@ -82,26 +82,22 @@ const AppPill = ({ app, isSelected, isFilterActive, onSelect }: iAppPillProps) =
     <button
       type="button"
       onClick={onSelect}
-      className={`shrink-0 w-24 px-1.5 pt-1 pb-2 transition-opacity duration-300 ${
+      className={`shrink-0 w-28 px-2.5 pt-1 pb-2 transition-opacity duration-300 ${
         dimmed ? "opacity-40" : "opacity-100"
       }`}
     >
-      <span
-        className={`flex items-center justify-center rounded-[28px] p-2 transition-colors duration-300 ${
-          isSelected ? "bg-indigo-50 dark:bg-gray-700/70" : ""
-        }`}
-      >
+      <span className="flex h-[4.75rem] items-center justify-center px-1">
         <img
           src={app.icon}
           alt={app.name}
-          className={`w-14 h-14 rounded-2xl shadow-sm transition-all duration-300 ${
+          className={`h-14 w-14 rounded-2xl shadow-sm transition-all duration-300 ${
             isSelected
-              ? "scale-105 ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"
-              : "hover:scale-[1.02]"
+              ? "ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"
+              : ""
           }`}
         />
       </span>
-      <span className="mt-1 block min-h-10 max-w-full text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight line-clamp-2 break-words">
+      <span className="mt-1 block min-h-[3.25rem] max-w-full text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-[1.15] line-clamp-3 break-words">
         {app.name}
       </span>
     </button>
@@ -142,7 +138,7 @@ export const SupportBrowser = ({
           Select an app to see its support articles:
         </p>
         <div className="relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none">
-          <div className="flex w-max min-w-full justify-center gap-3 px-4 sm:px-8 py-2">
+          <div className="flex w-max min-w-full justify-center gap-4 px-5 sm:px-10 py-2">
             {supportApps.map((app) => (
               <AppPill
                 key={app.id}
