@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import appList from "../../apps.json";
+import { PolicyLinks } from "../../PolicyLinks";
 import { fetchLinkPreview } from "../../linkPreview";
 
 type iRawApp = (typeof appList)[number];
@@ -177,6 +178,10 @@ const page = async ({
           );
         })}
       </div>
+
+      {raw?.role === "indie" && raw.appid && (
+        <PolicyLinks appKey={raw.id || raw.appid} />
+      )}
     </div>
   );
 };

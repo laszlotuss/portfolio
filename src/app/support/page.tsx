@@ -31,6 +31,7 @@ export interface iSupportApp {
   appid?: string;
   name: string;
   icon: string;
+  policyKey?: string;
   supportCards: iSupportCard[];
 }
 
@@ -76,6 +77,7 @@ const page = async () => {
         appid: app.appid,
         name: app.name,
         icon: app.icon,
+        policyKey: app.role === "indie" && app.appid ? app.id : undefined,
         supportCards: keys
           .map((k) => ALL_SUPPORT_LINKS.find((c) => c.key === k))
           .filter((c): c is iSupportCard => c !== undefined),

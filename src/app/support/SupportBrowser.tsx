@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PolicyLinks } from "../PolicyLinks";
 import { ArrowOut } from "./ArrowOut";
 import type { iSupportCard, iSupportApp } from "./page";
 
@@ -181,6 +182,8 @@ export const SupportBrowser = ({
           Show all support articles
         </button>
       )}
+
+      {selectedApp?.policyKey && <PolicyLinks appKey={selectedApp.policyKey} />}
     </>
   );
 };
