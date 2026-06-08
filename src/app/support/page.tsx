@@ -48,7 +48,7 @@ const ALL_SUPPORT_LINKS: iSupportCard[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Support | László Tuss",
+  title: "Support",
 };
 
 const page = async () => {

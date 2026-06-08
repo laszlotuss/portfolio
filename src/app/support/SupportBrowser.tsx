@@ -82,18 +82,26 @@ const AppPill = ({ app, isSelected, isFilterActive, onSelect }: iAppPillProps) =
     <button
       type="button"
       onClick={onSelect}
-      className={`flex flex-col items-center gap-1.5 shrink-0 w-20 transition-all duration-300 ${
-        isSelected ? "scale-110" : dimmed ? "opacity-40" : "opacity-70 hover:opacity-100"
+      className={`shrink-0 w-24 px-1.5 pt-1 pb-2 transition-opacity duration-300 ${
+        dimmed ? "opacity-40" : "opacity-100"
       }`}
     >
-      <img
-        src={app.icon}
-        alt={app.name}
-        className={`w-14 h-14 rounded-2xl shadow-sm transition-all duration-300 ${
-          isSelected ? "ring-3 ring-indigo-500" : ""
+      <span
+        className={`flex items-center justify-center rounded-[28px] p-2 transition-colors duration-300 ${
+          isSelected ? "bg-indigo-50 dark:bg-gray-700/70" : ""
         }`}
-      />
-      <span className="text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight line-clamp-2 max-w-full">
+      >
+        <img
+          src={app.icon}
+          alt={app.name}
+          className={`w-14 h-14 rounded-2xl shadow-sm transition-all duration-300 ${
+            isSelected
+              ? "scale-105 ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-800"
+              : "hover:scale-[1.02]"
+          }`}
+        />
+      </span>
+      <span className="mt-1 block min-h-10 max-w-full text-xs font-medium text-gray-600 dark:text-gray-400 text-center leading-tight line-clamp-2 break-words">
         {app.name}
       </span>
     </button>
@@ -116,6 +124,9 @@ export const SupportBrowser = ({
   const visibleKeys = selectedApp
     ? new Set(selectedApp.supportCards.map((c) => c.key))
     : null;
+  const visibleCards = visibleKeys
+    ? allCards.filter((card) => visibleKeys.has(card.key))
+    : allCards;
 
   const isFilterActive = selectedApp !== null;
 
@@ -130,16 +141,18 @@ export const SupportBrowser = ({
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 px-4 sm:px-0">
           Select an app to see its support articles:
         </p>
-        <div className="flex gap-4 overflow-x-auto pb-4 px-4 sm:px-0 scrollbar-none">
-          {supportApps.map((app) => (
-            <AppPill
-              key={app.id}
-              app={app}
-              isSelected={selectedAppId === app.id}
-              isFilterActive={isFilterActive}
-              onSelect={() => handleSelect(app.id)}
-            />
-          ))}
+        <div className="relative left-[calc(50%-50vw)] w-screen overflow-x-auto scrollbar-none">
+          <div className="flex w-max min-w-full justify-center gap-3 px-4 sm:px-8 py-2">
+            {supportApps.map((app) => (
+              <AppPill
+                key={app.id}
+                app={app}
+                isSelected={selectedAppId === app.id}
+                isFilterActive={isFilterActive}
+                onSelect={() => handleSelect(app.id)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -151,24 +164,13 @@ export const SupportBrowser = ({
       </p>
 
       {/* Support cards — with transition on filter */}
-      <div className="flex flex-col">
-        {allCards.map((card, i) => {
+      <div className="flex flex-col gap-3">
+        {visibleCards.map((card) => {
+          const i = allCards.findIndex((candidate) => candidate.url === card.url);
           const preview = previews[i];
-          const isVisible = !visibleKeys || visibleKeys.has(card.key);
 
           return (
-            <div
-              key={card.url}
-              className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                isVisible
-                  ? "opacity-100 max-h-40 scale-100 mb-3"
-                  : "opacity-0 max-h-0 scale-95 mb-0 pointer-events-none"
-              }`}
-            >
-              {isVisible && (
-                <SupportCard card={card} preview={preview} />
-              )}
-            </div>
+            <SupportCard key={card.url} card={card} preview={preview} />
           );
         })}
       </div>

@@ -20,6 +20,8 @@ const Header = () => {
   // SSR-safe defaults; refined on the client per route.
   const [canGoBack, setCanGoBack] = useState(true);
   const [hasSupport, setHasSupport] = useState(false);
+  const isSupportPage = pathname === "/support" || pathname.startsWith("/support/");
+  const headerTitle = isSupportPage ? "Support" : "László Tuss";
 
   // Home offers the About link; every other page a Back (or Home) button.
   const showBack = pathname !== "/";
@@ -132,7 +134,7 @@ const Header = () => {
         </div>
         <Link href="/">
           <h1 className="text-indigo-600 dark:text-indigo-400 font-black text-lg sm:text-xl whitespace-nowrap">
-            László Tuss
+            {headerTitle}
           </h1>
         </Link>
         <div className="flex-1 flex justify-end">

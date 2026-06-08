@@ -65,7 +65,7 @@ const ALL_SUPPORT_LINKS: SupportLink[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Support | László Tuss",
+  title: "Support",
 };
 
 const ArrowOut = ({ size = 18 }: { size?: number }) => (
