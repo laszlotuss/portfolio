@@ -130,22 +130,22 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
       url: STICKER_SUPPORT_URL,
       fallbackTitle: STICKER_SUPPORT_TITLE,
     });
-  if (app.subscription)
-    supportLinks.push({
-      url: SUBSCRIPTION_SUPPORT_URL,
-      fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE,
-    });
+  if (app.pip)
+    supportLinks.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
   if (app.watch || app.screenshotGroups.some((g) => g.platform === "watchOS"))
     supportLinks.push({
       url: WATCH_SUPPORT_URL,
       fallbackTitle: WATCH_SUPPORT_TITLE,
     });
-  if (app.pip)
-    supportLinks.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
-  if (app.purchase)
+  if (app.purchase || app.subscription)
     PURCHASE_SUPPORT_URLS.forEach((url) =>
       supportLinks.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
     );
+  if (app.subscription)
+    supportLinks.push({
+      url: SUBSCRIPTION_SUPPORT_URL,
+      fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE,
+    });
   if (descSupportUrl)
     supportLinks.push({ url: descSupportUrl, fallbackTitle: "Support" });
 
