@@ -10,9 +10,7 @@ const page = async ({
 }) => {
   const { app } = await searchParams;
   const matched = app ? await findAppByName(app) : undefined;
-  const to = matched
-    ? `/${matched.appid || matched.id}/privacy-policy`
-    : "/privacy-policy";
+  const to = matched ? `/privacy-policy/${matched.appid || matched.id}` : "/privacy-policy";
   return <LegacyRedirect to={to} />;
 };
 
