@@ -55,13 +55,13 @@ function getSupportLinks(raw: iRawApp): SupportLink[] {
  */
 const ALL_SUPPORT_LINKS: SupportLink[] = [
   { url: STICKER_SUPPORT_URL, fallbackTitle: STICKER_SUPPORT_TITLE },
-  { url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE },
-  { url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE },
   { url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE },
+  { url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE },
   ...PURCHASE_SUPPORT_URLS.map((url) => ({
     url,
     fallbackTitle: PURCHASE_SUPPORT_TITLE,
   })),
+  { url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE },
 ];
 
 export const metadata: Metadata = {
