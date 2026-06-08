@@ -61,7 +61,7 @@ const page = async () => {
       if (app.pip) return true;
       if (app.watch) return true;
       if (app.subscription) return true;
-      if (app.purchase) return true;
+      if (app.purchase || app.subscription) return true;
       return false;
     })
     .map((app) => {
@@ -69,8 +69,8 @@ const page = async () => {
       if (app.sticker) keys.push("sticker");
       if (app.pip) keys.push("pip");
       if (app.watch) keys.push("watch");
-      if (app.subscription) keys.push("subscription");
       if (app.purchase) keys.push("purchase-0", "purchase-1");
+      if (app.subscription) keys.push("subscription");
       return {
         id: app.id,
         appid: app.appid,
