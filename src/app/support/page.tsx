@@ -34,12 +34,13 @@ const page = async ({
   // Apps that have at least one support article (shared logic with the app
   // pages — flags plus genre/watchOS inference).
   const supportApps: iSupportApp[] = apps
+    .filter((app) => app.role === "indie")
     .map((app) => ({
       id: app.id,
       appid: app.appid,
       name: app.name,
       icon: app.icon,
-      policyKey: app.role === "indie" && app.appid ? app.id : undefined,
+      policyKey: app.appid ? app.id : undefined,
       supportCards: getSupportCards(app),
     }))
     .filter((app) => app.supportCards.length > 0);
