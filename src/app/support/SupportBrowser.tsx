@@ -8,7 +8,8 @@ import type { iSupportCard, iSupportApp } from "./page";
 interface iSupportBrowserProps {
   supportApps: iSupportApp[];
   allCards: iSupportCard[];
-  previews: (iLinkPreview | null)[];
+  previews: Record<string, iLinkPreview | null>;
+  initialAppId?: string | null;
 }
 
 interface iLinkPreview {
@@ -109,21 +110,18 @@ export const SupportBrowser = ({
   supportApps,
   allCards,
   previews,
+  initialAppId = null,
 }: iSupportBrowserProps) => {
-  const [selectedAppId, setSelectedAppId] = useState<string | null>(null);
+  const [selectedAppId, setSelectedAppId] = useState<string | null>(
+    initialAppId
+  );
 
-  // When an app is selected, show only its support cards.
+  // When an app is selected, show its own cards (these can include
+  // app-specific links that aren't in the generic list).
   const selectedApp = selectedAppId
     ? supportApps.find((a) => a.id === selectedAppId)
     : null;
-
-  // Build a Set of card keys that are visible for this selection.
-  const visibleKeys = selectedApp
-    ? new Set(selectedApp.supportCards.map((c) => c.key))
-    : null;
-  const visibleCards = visibleKeys
-    ? allCards.filter((card) => visibleKeys.has(card.key))
-    : allCards;
+  const visibleCards = selectedApp ? selectedApp.supportCards : allCards;
 
   const isFilterActive = selectedApp !== null;
 
@@ -162,14 +160,13 @@ export const SupportBrowser = ({
 
       {/* Support cards — with transition on filter */}
       <div className="flex flex-col gap-3">
-        {visibleCards.map((card) => {
-          const i = allCards.findIndex((candidate) => candidate.url === card.url);
-          const preview = previews[i];
-
-          return (
-            <SupportCard key={card.url} card={card} preview={preview} />
-          );
-        })}
+        {visibleCards.map((card) => (
+          <SupportCard
+            key={card.url}
+            card={card}
+            preview={previews[card.url] ?? null}
+          />
+        ))}
       </div>
 
       {/* Clear filter button */}

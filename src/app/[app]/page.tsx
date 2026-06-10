@@ -8,24 +8,7 @@ import { fetchLinkPreview } from "../linkPreview";
 import { AppDescription } from "./AppDescription";
 import { PolicyLinks } from "../PolicyLinks";
 import { notFound } from "next/navigation";
-
-// Apple's help article for iMessage apps, shown on my sticker apps.
-const STICKER_SUPPORT_URL = "https://support.apple.com/en-us/104969";
-const STICKER_SUPPORT_TITLE =
-  "How to use iMessage apps on your iPhone and iPad";
-const SUBSCRIPTION_SUPPORT_URL = "https://support.apple.com/en-us/HT202039";
-const SUBSCRIPTION_SUPPORT_TITLE =
-  "View, change, or cancel your subscriptions";
-const WATCH_SUPPORT_URL = "https://support.apple.com/en-us/109023";
-const WATCH_SUPPORT_TITLE = "Set up and use Apple Watch";
-const PIP_SUPPORT_URL =
-  "https://support.apple.com/guide/iphone/multitask-with-picture-in-picture-iphcc3587b5d/ios";
-const PIP_SUPPORT_TITLE = "Use Picture in Picture on iPhone";
-const PURCHASE_SUPPORT_URLS = [
-  "https://support.apple.com/en-us/118223",
-  "https://support.apple.com/en-us/118212",
-];
-const PURCHASE_SUPPORT_TITLE = "Check your purchase history in the App Store";
+import { getSupportCards } from "../supportLinks";
 
 export const generateMetadata = async ({
   params,
@@ -113,47 +96,9 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
   ];
   const rows = infoRows.filter(([, value]) => Boolean(value));
 
-  // Support cards — sticker first, then subscription, then any support.apple
-  // link found in the description (deduped by URL).
-  const isSticker = !!app.sticker || /sticker/i.test(app.genre || "");
-  const descSupport = app.description
-    .match(/(?:https?:\/\/)?support\.apple\.com\/\S+/i)?.[0]
-    ?.replace(/[.,;)]+$/, "");
-  const descSupportUrl = descSupport
-    ? descSupport.startsWith("http")
-      ? descSupport
-      : `https://${descSupport}`
-    : undefined;
-
-  const supportLinks: { url: string; fallbackTitle: string }[] = [];
-  if (isSticker)
-    supportLinks.push({
-      url: STICKER_SUPPORT_URL,
-      fallbackTitle: STICKER_SUPPORT_TITLE,
-    });
-  if (app.pip)
-    supportLinks.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
-  if (app.watch || app.screenshotGroups.some((g) => g.platform === "watchOS"))
-    supportLinks.push({
-      url: WATCH_SUPPORT_URL,
-      fallbackTitle: WATCH_SUPPORT_TITLE,
-    });
-  if (app.purchase || app.subscription)
-    PURCHASE_SUPPORT_URLS.forEach((url) =>
-      supportLinks.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
-    );
-  if (app.subscription)
-    supportLinks.push({
-      url: SUBSCRIPTION_SUPPORT_URL,
-      fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE,
-    });
-  if (descSupportUrl)
-    supportLinks.push({ url: descSupportUrl, fallbackTitle: "Support" });
-
-  const seen = new Set<string>();
-  const supportCards = supportLinks.filter(
-    (l) => !seen.has(l.url) && seen.add(l.url)
-  );
+  // Support cards — shared logic with /support (flags + genre/watchOS
+  // inference + any support.apple link found in the description).
+  const supportCards = getSupportCards(app);
   const supportPreviews = await Promise.all(
     supportCards.map((l) => fetchLinkPreview(l.url))
   );

@@ -1,91 +1,18 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import appList from "../../apps.json";
+import { getApp } from "../../app";
 import { PolicyLinks } from "../../PolicyLinks";
 import { fetchLinkPreview } from "../../linkPreview";
-
-type iRawApp = (typeof appList)[number];
-
-// Apple's help article URLs (same constants as [app]/page.tsx)
-const STICKER_SUPPORT_URL = "https://support.apple.com/en-us/104969";
-const STICKER_SUPPORT_TITLE =
-  "How to use iMessage apps on your iPhone and iPad";
-const SUBSCRIPTION_SUPPORT_URL = "https://support.apple.com/en-us/HT202039";
-const SUBSCRIPTION_SUPPORT_TITLE =
-  "View, change, or cancel your subscriptions";
-const WATCH_SUPPORT_URL = "https://support.apple.com/en-us/109023";
-const WATCH_SUPPORT_TITLE = "Set up and use Apple Watch";
-const PIP_SUPPORT_URL =
-  "https://support.apple.com/guide/iphone/multitask-with-picture-in-picture-iphcc3587b5d/ios";
-const PIP_SUPPORT_TITLE = "Use Picture in Picture on iPhone";
-const PURCHASE_SUPPORT_URLS = [
-  "https://support.apple.com/en-us/118212",
-  "https://support.apple.com/en-us/118223",
-];
-const PURCHASE_SUPPORT_TITLE = "Check your purchase history in the App Store";
-
-interface SupportLink {
-  url: string;
-  fallbackTitle: string;
-}
-
-/**
- * Determine which support sections to show based on the raw JSON entry.
- */
-function getSupportLinks(raw: iRawApp): SupportLink[] {
-  const links: SupportLink[] = [];
-
-  if (raw.sticker)
-    links.push({ url: STICKER_SUPPORT_URL, fallbackTitle: STICKER_SUPPORT_TITLE });
-  if (raw.pip)
-    links.push({ url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE });
-  if (raw.watch)
-    links.push({ url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE });
-  if (raw.purchase)
-    PURCHASE_SUPPORT_URLS.forEach((url: string) =>
-      links.push({ url, fallbackTitle: PURCHASE_SUPPORT_TITLE })
-    );
-  if (raw.subscription)
-    links.push({ url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE });
-
-  return links;
-}
-
-/**
- * All support links — used when no appid matches.
- */
-const ALL_SUPPORT_LINKS: SupportLink[] = [
-  { url: STICKER_SUPPORT_URL, fallbackTitle: STICKER_SUPPORT_TITLE },
-  { url: PIP_SUPPORT_URL, fallbackTitle: PIP_SUPPORT_TITLE },
-  { url: WATCH_SUPPORT_URL, fallbackTitle: WATCH_SUPPORT_TITLE },
-  ...PURCHASE_SUPPORT_URLS.map((url) => ({
-    url,
-    fallbackTitle: PURCHASE_SUPPORT_TITLE,
-  })),
-  { url: SUBSCRIPTION_SUPPORT_URL, fallbackTitle: SUBSCRIPTION_SUPPORT_TITLE },
-];
+import {
+  ALL_SUPPORT_CARDS,
+  getSupportCards,
+  iSupportCard,
+} from "../../supportLinks";
+import { ArrowOut } from "../ArrowOut";
 
 export const metadata: Metadata = {
   title: "Support",
 };
-
-const ArrowOut = ({ size = 18 }: { size?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-    <polyline points="15 3 21 3 21 9"></polyline>
-    <line x1="10" y1="14" x2="21" y2="3"></line>
-  </svg>
-);
 
 const page = async ({
   params,
@@ -94,27 +21,19 @@ const page = async ({
 }) => {
   const { appid } = await params;
 
-  // Try to find a matching entry in apps.json by appid
-  const raw = (appList as iRawApp[]).find((r) => r.appid === appid);
+  // Resolve by appid or id/slug; unknown values fall back to every article.
+  const app = await getApp(appid);
+  const supportLinks: iSupportCard[] = app
+    ? getSupportCards(app)
+    : ALL_SUPPORT_CARDS;
 
-  // If no match, show all support sections
-  const supportLinks: SupportLink[] = raw
-    ? getSupportLinks(raw)
-    : ALL_SUPPORT_LINKS;
-
-  // Deduplicate by URL
-  const seen = new Set<string>();
-  const uniqueLinks = supportLinks.filter(
-    (l) => !seen.has(l.url) && seen.add(l.url)
-  );
-
-  if (uniqueLinks.length === 0) {
+  if (supportLinks.length === 0) {
     notFound();
   }
 
   // Fetch link previews for each support URL
   const previews = await Promise.all(
-    uniqueLinks.map((l) => fetchLinkPreview(l.url))
+    supportLinks.map((l) => fetchLinkPreview(l.url))
   );
 
   return (
@@ -123,13 +42,13 @@ const page = async ({
         Support
       </h1>
       <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
-        {raw
-          ? `Help articles and resources relevant to this app.`
+        {app
+          ? `Help articles and resources relevant to ${app.name}.`
           : `General help articles for common iOS features.`}
       </p>
 
       <div className="flex flex-col gap-3">
-        {uniqueLinks.map((card, i) => {
+        {supportLinks.map((card, i) => {
           const preview = previews[i];
           return (
             <a
@@ -179,9 +98,7 @@ const page = async ({
         })}
       </div>
 
-      {raw?.role === "indie" && raw.appid && (
-        <PolicyLinks appKey={raw.id || raw.appid} />
-      )}
+      {app?.role === "indie" && app.appid && <PolicyLinks appKey={app.id} />}
     </div>
   );
 };
