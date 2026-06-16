@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     description: "Indie iOS developer from Budapest.",
     images: ["/profile.jpg"],
   },
+  verification: {
+    google: "9dab28611e4e97e0",
+  },
 };
 
 export default function RootLayout({
