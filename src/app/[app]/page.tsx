@@ -19,13 +19,27 @@ export const generateMetadata = async ({
   const app = await getApp(id);
   if (!app) return { title: "Not found | László Tuss" };
 
+  const description = app.description
+    ? app.description.slice(0, 160).replace(/\s+\S*$/, "") + "…"
+    : `${app.name} — an iOS app by László Tuss.`;
+
   return {
-    title: `${app.name} | László Tuss`,
+    title: app.name,
+    description,
     icons: {
       icon: [{ url: `/${app.id}/icon`, type: "image/png", sizes: "64x64" }],
     },
     openGraph: {
-      images: app.icon,
+      type: "website",
+      title: app.name,
+      description,
+      images: [{ url: app.icon, width: 512, height: 512, alt: app.name }],
+    },
+    twitter: {
+      card: "summary",
+      title: app.name,
+      description,
+      images: [app.icon],
     },
   };
 };
