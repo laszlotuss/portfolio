@@ -31,18 +31,23 @@ const Footer = () => {
             Budapest, Hungary
           </p>
           <div className="mt-2 flex items-center gap-3">
-            <Link
-              href="/about"
-              className="inline-block text-sm font-semibold text-indigo-500 hover:underline underline-offset-2"
-            >
-              About
-            </Link>
-            <Link
-              href="/support"
-              className="inline-block text-sm font-semibold text-indigo-500 hover:underline underline-offset-2"
-            >
-              Support
-            </Link>
+            {[
+              { href: "/", label: "Home" },
+              { href: "/about", label: "About" },
+              { href: "/support", label: "Support" },
+            ].map(({ href, label }, i, arr) => (
+              <span key={href} className="flex items-center gap-3">
+                <Link
+                  href={href}
+                  className="text-sm font-semibold text-indigo-500 hover:underline underline-offset-2"
+                >
+                  {label}
+                </Link>
+                {i < arr.length - 1 && (
+                  <span aria-hidden className="text-gray-300 dark:text-gray-600">·</span>
+                )}
+              </span>
+            ))}
           </div>
         </div>
         <div className="flex items-center gap-3">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PolicyLinks } from "../PolicyLinks";
+import Link from "next/link";
 import { ArrowOut } from "./ArrowOut";
 import type { iSupportCard, iSupportApp } from "./page";
 
@@ -180,7 +180,34 @@ export const SupportBrowser = ({
         </button>
       )}
 
-      {selectedApp?.policyKey && <PolicyLinks appKey={selectedApp.policyKey} />}
+      {selectedApp && (
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <Link
+            href={`/${selectedApp.id}`}
+            className="text-indigo-500 hover:underline underline-offset-2"
+          >
+            App Page
+          </Link>
+          {selectedApp.policyKey && (
+            <>
+              <span aria-hidden>·</span>
+              <Link
+                href={`/privacy-policy/${selectedApp.policyKey}`}
+                className="text-indigo-500 hover:underline underline-offset-2"
+              >
+                Privacy Policy
+              </Link>
+              <span aria-hidden>·</span>
+              <Link
+                href={`/privacy-policy/${selectedApp.policyKey}#terms`}
+                className="text-indigo-500 hover:underline underline-offset-2"
+              >
+                Terms of Use
+              </Link>
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };
