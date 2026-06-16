@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowOut } from "./ArrowOut";
 import type { iSupportCard, iSupportApp } from "./page";
@@ -112,8 +113,9 @@ export const SupportBrowser = ({
   previews,
   initialAppId = null,
 }: iSupportBrowserProps) => {
+  const router = useRouter();
   const [selectedAppId, setSelectedAppId] = useState<string | null>(
-    initialAppId
+    initialAppId ?? null
   );
 
   // When an app is selected, show its own cards (these can include
@@ -125,9 +127,15 @@ export const SupportBrowser = ({
 
   const isFilterActive = selectedApp !== null;
 
-  const handleClear = () => setSelectedAppId(null);
-  const handleSelect = (id: string) =>
-    setSelectedAppId((prev) => (prev === id ? null : id));
+  const handleClear = () => {
+    setSelectedAppId(null);
+    router.replace("/support", { scroll: false });
+  };
+  const handleSelect = (id: string) => {
+    const next = selectedAppId === id ? null : id;
+    setSelectedAppId(next);
+    router.replace(next ? `/support?app=${next}` : "/support", { scroll: false });
+  };
 
   return (
     <>

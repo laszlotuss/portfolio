@@ -23,8 +23,8 @@ const CreditLink = ({
 
 const Footer = () => {
   return (
-    <footer className="max-w-4xl mx-auto w-full px-4 mb-12 pt-8 border-t border-gray-300 dark:border-gray-600">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+    <footer className="max-w-4xl mx-auto w-full px-4 mb-4 pt-4 border-t border-gray-300 dark:border-gray-600">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h2 className="text-xl font-black text-indigo-500">László Tuss</h2>
           <p className="text-md font-medium text-gray-500 dark:text-gray-400">
