@@ -8,7 +8,7 @@ Live at [laszlotuss.com](https://laszlotuss.com)
 
 - **Timeline** — chronological list of apps grouped by year, with ratings, roles, and platform icons
 - **App pages** — per-app detail pages with screenshots (grouped by platform), App Store metadata fetched from the iTunes API, description link detection, and affiliate App Store links
-- **Support** — `/support` browser with app filtering and per-app support articles; `/support/[appid]` for deep-linking; all resolvable via `?app=`, `?appid=`, or `?id=` query params
+- **Support** — `/support` browser with app filtering (indie apps only), animated card list, and URL-persisted selection (`?app=`); `/support/[appid]` for deep-linking; all resolvable via `?app=`, `?appid=`, or `?id=` query params; card logic shared via `src/app/supportLinks.ts`
 - **Privacy Policy / Terms** — shared policy page at `/privacy-policy/[app]` and `/privacy-policy?app=`, covering all indie apps
 - **Favicons** — per-app rounded tab icons generated server-side via `next/og`; root icon from profile photo; gap-free swap on navigation
 - **About** — `/about` page
@@ -45,6 +45,14 @@ Build (requires the NVM node path on Apple Silicon):
 ```bash
 PATH="$HOME/.nvm/versions/node/v22.22.3/bin:$PATH" node node_modules/next/dist/bin/next build
 ```
+
+## SEO
+
+- `robots.ts` — allows all crawlers, points to the sitemap
+- `sitemap.ts` — dynamically lists `/`, `/about`, `/support`, and every app page
+- Per-app `generateMetadata` — title, description (first 160 chars of App Store copy), `og:image` (app icon), Twitter card
+- JSON-LD `SoftwareApplication` schema on every app page — enables Google rich results (name, rating, price, platform)
+- Google Search Console verified via meta tag + HTML file
 
 ## Tech
 
