@@ -117,8 +117,48 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
     supportCards.map((l) => fetchLinkPreview(l.url))
   );
 
+  // JSON-LD structured data — SoftwareApplication schema so Google can show
+  // rich results (name, rating, price, platform) for each app in search.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: app.name,
+    operatingSystem: "iOS",
+    applicationCategory: app.genre ? `${app.genre}Application` : "MobileApplication",
+    description: app.description || undefined,
+    image: app.icon || undefined,
+    url: app.storeUrl || undefined,
+    ...(app.rating && app.ratingCount
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: app.rating.toFixed(1),
+            ratingCount: app.ratingCount,
+          },
+        }
+      : {}),
+    ...(app.price
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: app.price === "Free" ? "0" : app.price.replace(/[^0-9.]/g, ""),
+            priceCurrency: "USD",
+          },
+        }
+      : {}),
+    author: {
+      "@type": "Person",
+      name: "László Tuss",
+      url: "https://laszlotuss.com",
+    },
+  };
+
   return (
     <div className="flex-1 px-4 max-w-3xl w-full mx-auto mt-10 mb-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <HashScroll />
       {/* Hero */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
