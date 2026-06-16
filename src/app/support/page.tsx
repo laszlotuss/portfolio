@@ -40,7 +40,7 @@ const page = async ({
       appid: app.appid,
       name: app.name,
       icon: app.icon,
-      policyKey: app.appid ? app.id : undefined,
+      policyKey: app.appid ? app.appid : undefined,
       supportCards: getSupportCards(app),
     }))
     .filter((app) => app.supportCards.length > 0);

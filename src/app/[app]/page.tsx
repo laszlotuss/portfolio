@@ -325,7 +325,7 @@ const page = async ({ params }: { params: Promise<{ app: string }> }) => {
 
       {/* Legal — only for my own (indie) App Store apps */}
       {app.role === "indie" && app.appid && (
-        <PolicyLinks appKey={app.id} />
+        <PolicyLinks appid={app.appid} />
       )}
     </div>
   );
