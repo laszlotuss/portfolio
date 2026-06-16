@@ -161,13 +161,15 @@ export const SupportBrowser = ({
 
       {/* Description */}
       <p className="text-lg text-gray-500 dark:text-gray-400 mb-8">
-        {selectedApp
-          ? `Help articles for ${selectedApp.name}`
-          : `General help articles for common iOS features.`}
+        {selectedApp ? (
+          <>Help articles for <span className="font-bold text-gray-800 dark:text-gray-100">{selectedApp.name}</span></>
+        ) : (
+          "General help articles for common iOS features."
+        )}
       </p>
 
-      {/* Support cards — with transition on filter */}
-      <div className="flex flex-col gap-3">
+      {/* Support cards — re-keyed on selection so the fade-slide animation fires */}
+      <div key={selectedAppId ?? "all"} className="flex flex-col gap-3 animate-fade-slide-in">
         {visibleCards.map((card) => (
           <SupportCard
             key={card.url}
