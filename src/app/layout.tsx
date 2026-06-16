@@ -12,10 +12,29 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "László Tuss",
-  description: "Indie iOS developer",
+  metadataBase: new URL("https://laszlotuss.com"),
+  title: {
+    default: "László Tuss",
+    template: "%s | László Tuss",
+  },
+  description:
+    "László Tuss — indie iOS developer from Budapest. Apps for iPhone, iPad, Apple Watch and more.",
   icons: {
     icon: [{ url: "/profile.jpg", type: "image/jpeg" }],
+  },
+  openGraph: {
+    type: "website",
+    siteName: "László Tuss",
+    title: "László Tuss",
+    description:
+      "Indie iOS developer from Budapest. Apps for iPhone, iPad, Apple Watch and more.",
+    images: [{ url: "/profile.jpg", width: 512, height: 512, alt: "László Tuss" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "László Tuss",
+    description: "Indie iOS developer from Budapest.",
+    images: ["/profile.jpg"],
   },
 };
 
