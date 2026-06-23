@@ -1,21 +1,19 @@
-export const PolicyLinks = ({ appid }: { appid: string }) => (
+import Link from "next/link";
+
+export const PolicyLinks = ({ appKey }: { appKey: string }) => (
   <div className="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-    <a
-      href={`https://catnip.media/privacypolicy?appid=${appid}`}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/privacy-policy/${appKey}`}
       className="text-indigo-500 hover:underline underline-offset-2"
     >
       Privacy Policy
-    </a>
+    </Link>
     <span aria-hidden>·</span>
-    <a
-      href={`https://catnip.media/privacypolicy?appid=${appid}#EULA`}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/privacy-policy/${appKey}#terms`}
       className="text-indigo-500 hover:underline underline-offset-2"
     >
       Terms of Use
-    </a>
+    </Link>
   </div>
 );

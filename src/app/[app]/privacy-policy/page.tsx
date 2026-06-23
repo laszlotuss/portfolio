@@ -1,13 +1,21 @@
-import { redirect } from "next/navigation";
-import { getApp } from "../../app";
+import type { Metadata } from "next";
+import {
+  PrivacyPolicyPage,
+  getPrivacyPolicyMetadata,
+} from "@/app/privacy-policy/shared";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ app: string }>;
+}): Promise<Metadata> => {
+  const { app } = await params;
+  return getPrivacyPolicyMetadata(app);
+};
 
 const index = async ({ params }: { params: Promise<{ app: string }> }) => {
-  const { app: id } = await params;
-  const app = await getApp(id);
-  if (app?.appid) {
-    redirect(`https://catnip.media/privacypolicy?appid=${app.appid}`);
-  }
-  redirect("https://catnip.media/privacypolicy");
+  const { app } = await params;
+  return <PrivacyPolicyPage id={app} />;
 };
 
 export default index;

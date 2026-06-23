@@ -201,23 +201,19 @@ export const SupportBrowser = ({
           {selectedApp.policyKey && (
             <>
               <span aria-hidden>·</span>
-              <a
-                href={`https://catnip.media/privacypolicy?appid=${selectedApp.policyKey}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/privacy-policy/${selectedApp.policyKey}`}
                 className="text-indigo-500 hover:underline underline-offset-2"
               >
                 Privacy Policy
-              </a>
+              </Link>
               <span aria-hidden>·</span>
-              <a
-                href={`https://catnip.media/privacypolicy?appid=${selectedApp.policyKey}#EULA`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/privacy-policy/${selectedApp.policyKey}#terms`}
                 className="text-indigo-500 hover:underline underline-offset-2"
               >
                 Terms of Use
-              </a>
+              </Link>
             </>
           )}
         </div>

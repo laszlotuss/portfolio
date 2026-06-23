@@ -98,7 +98,7 @@ const page = async ({
         })}
       </div>
 
-      {app?.role === "indie" && app.appid && <PolicyLinks appid={app.appid} />}
+      {app?.role === "indie" && app.appid && <PolicyLinks appKey={app.id} />}
     </div>
   );
 };
