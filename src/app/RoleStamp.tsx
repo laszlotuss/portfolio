@@ -2,11 +2,11 @@ import { iAppRole } from "./app";
 
 const STAMPS: Record<iAppRole, { label: string; className: string }> = {
   indie: {
-    label: "Indie",
+    label: "Owner",
     className: "text-indigo-600 dark:text-indigo-400",
   },
   "co-owner": {
-    label: "Co-owner",
+    label: "Co-founder",
     className: "text-amber-600 dark:text-amber-500",
   },
   contract: {
