@@ -23,5 +23,6 @@ export const getPrivacyPolicyMetadata = async (
 
 export const PrivacyPolicyPage = async ({ id }: { id?: string }) => {
   const app = id ? await getApp(id) : undefined;
-  return <PrivacyPolicy app={app?.name} />;
+  const tier = app?.subscription ? "pps" : app?.purchase ? "ppp" : "pp";
+  return <PrivacyPolicy app={app?.name} tier={tier} />;
 };
